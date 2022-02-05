@@ -41,7 +41,7 @@ amountFor = (perf, play) => {
         case 'tragedy': // 비극
         result = 40000
             if (perf.audience > 30) {
-                thisAmount += 1000 * (perf.audience - 30)
+                result += 1000 * (perf.audience - 30)
             }
             break
         case 'comedy': // 희극
