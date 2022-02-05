@@ -2,6 +2,7 @@ const invoices = require('./invoices.json')
 const plays = require('./plays.json')
 
 /**
+ * P.33
  * Extract function (함수 추출하기)
  */
 
