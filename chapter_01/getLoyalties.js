@@ -2,8 +2,8 @@ const invoices = require('./invoices.json')
 const plays = require('./plays.json')
 
 
-renderPlainText = (statementData, invoice, plays) => { // 중간 데이터 구조를 인수로 전달
-    let result = `청구 내역 (고객명): ${invoice.customer}\n`
+renderPlainText = (data, invoice, plays) => {
+    let result = `청구 내역 (고객명): ${data.customer}\n`
     for (let perf of invoice.performances) {
         result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`
     }
@@ -67,7 +67,8 @@ renderPlainText = (statementData, invoice, plays) => { // 중간 데이터 구�
 
 statement = (invoice, plays) => {
     const statementData = {}
-    return renderPlainText(statementData, invoice, plays) // 중간 데이터 구조를 인수로 전달
+    statementData.customer = invoice.customer // 고객 데이터를 중간 데이터로 옮김
+    return renderPlainText(statementData, invoice, plays)
 }
 
 console.log(statement(invoices[0], plays))
