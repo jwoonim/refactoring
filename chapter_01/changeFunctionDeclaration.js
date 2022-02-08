@@ -16,8 +16,8 @@ statement = (invoice, plays) => {
     }).format
 
     for (let perf of invoice.performances) {
-        // const play = playFor(perf) 인라인된 변수 제거
-        let thisAmount = amountFor(perf, playFor(perf)) // 추출한 함수 이용
+        // let thisAmount = amountFor(perf, playFor(perf)) // 추출한 함수 이용
+        let thisAmount = amountFor(perf) // 필요 없어진 매개변수 제거
 
         // 포인트 적립
         volumeCredit += Math.max(perf.audience - 30, 0)
@@ -35,7 +35,8 @@ statement = (invoice, plays) => {
 }
 
 // Nested function
-amountFor = (aPerformance, play) => {
+// amountFor = (aPerformance, play) => {
+amountFor = (aPerformance) => { // 필요 없어진 매개변수 제거
     let result = 0
 
     // switch (play.type) {
