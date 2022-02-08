@@ -5,7 +5,7 @@ const plays = require('./plays.json')
 renderPlainText = (data, plays) => {
     let result = `청구 내역 (고객명): ${data.customer}\n`
     for (let perf of data.performances) {
-        result += `${perf.play.name}: ${usd(perf.amountFor)} (${perf.audience}석)\n`
+        result += `${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`
     }
     result += `총액: ${usd(totalAmount())}\n`
     result += `적립 포인트: ${totalVolumeCredits()}점\n`
@@ -14,7 +14,7 @@ renderPlainText = (data, plays) => {
     function totalAmount() {
         let result = 0
         for (let perf of data.performances) {
-            result += perf.amountFor
+            result += perf.amount
         }
         return result
     }
@@ -49,7 +49,7 @@ statement = (invoice, plays) => {
     function enrichPerformance(aPerformance) {
         const result = Object.assign({}, aPerformance)
         result.play = playFor(result)
-        result.amountFor = amountFor(result)
+        result.amount = amountFor(result)
         return result
     }
     function playFor(aPerformance) {
