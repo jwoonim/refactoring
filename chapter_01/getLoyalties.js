@@ -15,27 +15,13 @@ volumeCreditsFor = (aPerformance) => {
     return result
 }
 
-statement = (invoice, plays) => {
-    let totalAmount = 0,
-        // volumeCredits = 0,
-        result = `청구 내역 (고객명): ${invoice.customer}\n`
-
-    for (let perf of invoice.performances) {
-
-        // 청구 내역을 출력한다.
-        result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`
-        totalAmount += amountFor(perf)
-    }
-
-    let volumeCredits = 0 // 변수 선언(초기화)을 반복문 앞으로 이동
+totalVolumeCredits = (invoice) => {
+    let volumeCredits = 0
     for (let perf of invoice.performances) {
         // 포인트 적립
         volumeCredits += volumeCreditsFor(perf)
     }
-
-    result += `총액: ${usd(totalAmount)}\n`
-    result += `적립 포인트: ${volumeCredits}점\n`
-    return result
+    return volumeCredits
 }
 
 amountFor = (aPerformance) => {
@@ -63,6 +49,29 @@ amountFor = (aPerformance) => {
 
 playFor = (aPerformance) => {
     return plays[aPerformance.playID]
+}
+
+statement = (invoice, plays) => {
+    let totalAmount = 0,
+        result = `청구 내역 (고객명): ${invoice.customer}\n`
+
+    for (let perf of invoice.performances) {
+
+        // 청구 내역을 출력한다.
+        result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`
+        totalAmount += amountFor(perf)
+    }
+
+    // let volumeCredits = 0
+    // for (let perf of invoice.performances) {
+    //     // 포인트 적립
+    //     volumeCredits += volumeCreditsFor(perf)
+    // }
+    let volumeCredits = totalVolumeCredits(invoice) // 값 계산 로직을 함수로 추출
+
+    result += `총액: ${usd(totalAmount)}\n`
+    result += `적립 포인트: ${volumeCredits}점\n`
+    return result
 }
 
 console.log(statement(invoices[0], plays))
