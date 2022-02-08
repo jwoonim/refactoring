@@ -6,12 +6,12 @@ const plays = require('./plays.json')
  * Extract function (함수 추출하기)
  */
 
-volumeCreditsFor = (perf) => { // 새로 추출한 함수
-    let volumeCredits = 0
-    volumeCredits += Math.max(perf.audience = 30, 0)
-    if ('comedy' === playFor(perf).type)
-        volumeCredits += Math.floor(perf.audience / 5)
-    return volumeCredits
+volumeCreditsFor = (aPerformance) => { // 새로 추출한 함수
+    let result = 0
+    result += Math.max(aPerformance.audience = 30, 0)
+    if ('comedy' === playFor(aPerformance).type)
+        result += Math.floor(aPerformance.audience / 5)
+    return result
 }
 
 statement = (invoice, plays) => {
