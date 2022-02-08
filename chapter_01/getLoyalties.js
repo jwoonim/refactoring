@@ -24,6 +24,14 @@ totalVolumeCredits = (invoice) => {
     return volumeCredits
 }
 
+appleSauce = (invoice) => {
+    let totalAmount = 0
+    for (let perf of invoice.performances) {
+        totalAmount += amountFor(perf)
+    }
+    return totalAmount
+}
+
 amountFor = (aPerformance) => {
     let result = 0
 
@@ -52,17 +60,15 @@ playFor = (aPerformance) => {
 }
 
 statement = (invoice, plays) => {
-    let totalAmount = 0,
-        result = `청구 내역 (고객명): ${invoice.customer}\n`
+    // let totalAmount = 0,
+    let result = `청구 내역 (고객명): ${invoice.customer}\n`
 
     for (let perf of invoice.performances) {
-
-        // 청구 내역을 출력한다.
         result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`
-        totalAmount += amountFor(perf)
+        // totalAmount += amountFor(perf)
     }
 
-    // let volumeCredits = totalVolumeCredits(invoice)
+    let totalAmount = appleSauce(invoice) // 함수 추출 및 임시 이름 부여
 
     result += `총액: ${usd(totalAmount)}\n`
     result += `적립 포인트: ${totalVolumeCredits(invoice)}점\n` // 변수 인라인
