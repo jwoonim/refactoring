@@ -17,20 +17,20 @@ volumeCreditsFor = (aPerformance) => {
 
 statement = (invoice, plays) => {
     let totalAmount = 0,
-        volumeCredits = 0,
+        // volumeCredits = 0,
         result = `청구 내역 (고객명): ${invoice.customer}\n`
 
     for (let perf of invoice.performances) {
-        // 포인트 적립
-        // volumeCredits += volumeCreditsFor(perf)
 
         // 청구 내역을 출력한다.
         result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`
         totalAmount += amountFor(perf)
     }
 
+    let volumeCredits = 0 // 변수 선언(초기화)을 반복문 앞으로 이동
     for (let perf of invoice.performances) {
-        volumeCredits += volumeCreditsFor(perf) // 값 누적 로직을 별도 for문으로 분리
+        // 포인트 적립
+        volumeCredits += volumeCreditsFor(perf)
     }
 
     result += `총액: ${usd(totalAmount)}\n`
