@@ -72,8 +72,12 @@ statement = (invoice, plays) => {
     return renderPlainText(statementData, plays)
 
     function enrichPerformance(aPerformance) {
-        const result = Object.assign({}, aPerformance) // 얕은 복사 수행
+        const result = Object.assign({}, aPerformance)
+        result.play = playFor(result)
         return result
+    }
+    function playFor(aPerformance) {
+        return plays[aPerformance.playID]
     }
 }
 
