@@ -8,16 +8,9 @@ renderPlainText = (data, plays) => {
         result += `${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`
     }
     result += `총액: ${usd(data.totalAmount)}\n`
-    result += `적립 포인트: ${totalVolumeCredits()}점\n`
+    result += `적립 포인트: ${data.totalVolumeCredits}점\n`
     return result
 
-    function totalVolumeCredits() {
-        let result = 0
-        for (let perf of data.performances) {
-            result += perf.volumeCredits
-        }
-        return result
-    }
     function usd(aNumber) {
         return new Intl.NumberFormat('en-Us', {
             style: 'currency', currency: 'USD', minimumFractionDigits: 2
@@ -30,6 +23,7 @@ statement = (invoice, plays) => {
     statementData.customer = invoice.customer
     statementData.performances = invoice.performances.map(enrichPerformance)
     statementData.totalAmount = totalAmount(statementData)
+    statementData.totalVolumeCredits = totalVolumeCredits(statementData)
     return renderPlainText(statementData, plays)
 
     function enrichPerformance(aPerformance) {
@@ -75,6 +69,13 @@ statement = (invoice, plays) => {
         let result = 0
         for (let perf of data.performances) {
             result += perf.amount
+        }
+        return result
+    }
+    function totalVolumeCredits(data) {
+        let result = 0
+        for (let perf of data.performances) {
+            result += perf.volumeCredits
         }
         return result
     }
