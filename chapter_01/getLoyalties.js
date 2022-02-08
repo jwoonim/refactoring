@@ -2,7 +2,7 @@ const invoices = require('./invoices.json')
 const plays = require('./plays.json')
 
 
-renderPlainText = (invoice, plays) => { // 본문 전체를 별도 함수로 추출
+renderPlainText = (statementData, invoice, plays) => { // 중간 데이터 구조를 인수로 전달
     let result = `청구 내역 (고객명): ${invoice.customer}\n`
     for (let perf of invoice.performances) {
         result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`
@@ -66,16 +66,8 @@ renderPlainText = (invoice, plays) => { // 본문 전체를 별도 함수로 추
 }
 
 statement = (invoice, plays) => {
-    // let result = `청구 내역 (고객명): ${invoice.customer}\n`
-
-    // for (let perf of invoice.performances) {
-    //     result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`
-    // }
-
-    // result += `총액: ${usd(totalAmount(invoice))}\n`
-    // result += `적립 포인트: ${totalVolumeCredits(invoice)}점\n`
-    // return result
-    return renderPlainText(invoice, plays) // 본문 전체를 별도 함수로 추출
+    const statementData = {}
+    return renderPlainText(statementData, invoice, plays) // 중간 데이터 구조를 인수로 전달
 }
 
 console.log(statement(invoices[0], plays))
