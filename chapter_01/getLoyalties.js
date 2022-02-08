@@ -24,7 +24,7 @@ totalVolumeCredits = (invoice) => {
     return volumeCredits
 }
 
-appleSauce = (invoice) => {
+totalAmount = (invoice) => {
     let totalAmount = 0
     for (let perf of invoice.performances) {
         totalAmount += amountFor(perf)
@@ -65,13 +65,12 @@ statement = (invoice, plays) => {
 
     for (let perf of invoice.performances) {
         result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`
-        // totalAmount += amountFor(perf)
     }
 
-    let totalAmount = appleSauce(invoice) // 함수 추출 및 임시 이름 부여
+    // let totalAmount = appleSauce(invoice)
 
-    result += `총액: ${usd(totalAmount)}\n`
-    result += `적립 포인트: ${totalVolumeCredits(invoice)}점\n` // 변수 인라인
+    result += `총액: ${usd(totalAmount(invoice))}\n` // 변수 인라인 후 함수 이름 바꾸기
+    result += `적립 포인트: ${totalVolumeCredits(invoice)}점\n`
     return result
 }
 
