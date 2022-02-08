@@ -4,7 +4,7 @@ const plays = require('./plays.json')
 usd = (aNumber) => {
     return new Intl.NumberFormat('en-Us', {
         style: 'currency', currency: 'USD', minimumFractionDigits: 2
-    }).format(aNumber/100)  // 단위 변환 로직도 이 함수 안으로 이동
+    }).format(aNumber/100)
 }
 
 volumeCreditsFor = (aPerformance) => {
@@ -22,12 +22,17 @@ statement = (invoice, plays) => {
 
     for (let perf of invoice.performances) {
         // 포인트 적립
-        volumeCredits += volumeCreditsFor(perf)
+        // volumeCredits += volumeCreditsFor(perf)
 
         // 청구 내역을 출력한다.
-        result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석\n)` // 함수 이름 변경
+        result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`
         totalAmount += amountFor(perf)
     }
+
+    for (let perf of invoice.performances) {
+        volumeCredits += volumeCreditsFor(perf) // 값 누적 로직을 별도 for문으로 분리
+    }
+
     result += `총액: ${usd(totalAmount)}\n`
     result += `적립 포인트: ${volumeCredits}점\n`
     return result
