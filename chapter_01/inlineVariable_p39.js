@@ -2,7 +2,7 @@ const invoices = require('./invoices.json')
 const plays = require('./plays.json')
 
 /**
- * P.36
+ * P.39
  * Inline Variable (변수 인라인하기)
  */
 
