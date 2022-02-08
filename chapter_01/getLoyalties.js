@@ -62,15 +62,10 @@ statement = (invoice, plays) => {
         totalAmount += amountFor(perf)
     }
 
-    // let volumeCredits = 0
-    // for (let perf of invoice.performances) {
-    //     // 포인트 적립
-    //     volumeCredits += volumeCreditsFor(perf)
-    // }
-    let volumeCredits = totalVolumeCredits(invoice) // 값 계산 로직을 함수로 추출
+    // let volumeCredits = totalVolumeCredits(invoice)
 
     result += `총액: ${usd(totalAmount)}\n`
-    result += `적립 포인트: ${volumeCredits}점\n`
+    result += `적립 포인트: ${totalVolumeCredits(invoice)}점\n` // 변수 인라인
     return result
 }
 
